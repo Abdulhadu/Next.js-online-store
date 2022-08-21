@@ -1,0 +1,12 @@
+{
+    "emmet.excludeLanguages": [
+        "markdown",
+        "javascriptreact"
+    ],
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "editor.wordWrap": "on",
+    "diffEditor.wordWrap": "on",
+    "eslint.lintTask.enable": true
+}
