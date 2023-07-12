@@ -2,22 +2,109 @@ import React from "react";
 import { BsFilePlus } from "react-icons/Bs";
 import { BsFileMinus } from "react-icons/Bs";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {useState, useEffect} from "react";
+import OrderConfirmationModal from "./OrderConfirmationModal";
+import { useRouter } from 'next/router';
 
 const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
-  toast.info("Please Proceed to Checkout", {
-    position: "bottom-center",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
+  const [form, setform] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    address: "",
+    apartment: "",
+    city: "",
+    country: "Pakistan",
+    province: "",
+    postalCode: "",
+    phoneNo: ""
   });
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
+  const handleInputChange = (e) => {
+    setform((prevForm) => ({
+      ...prevForm,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const Submit = async (e) => {
+    e.preventDefault();
+
+    // Retrieve the form values
+    const {
+      email,
+      firstName,
+      lastName,
+      address,
+      apartment,
+      city,
+      country,
+      province,
+      postalCode,
+      phoneNo
+    } = form;
+
+    // Prepare the data object to send to the API
+    const data = {
+      email,
+      username: `${firstName}, ${lastName}`,
+      address: `${address}, ${apartment}, ${city}, ${country}, ${province}, ${postalCode}`,
+      phoneNo,
+      cart, // Include the cart data in the request
+    };
+console.log("data is : ",data);
+    try {
+      // Make an API call to submit the form data
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        // API call successful
+        toast.success("Order placed successfully!");
+        clearCart(); // Clear the cart after successful submission
+        setShowConfirmationModal(true); 
+      } else {
+        // API call failed
+        toast.error("Failed to submit the order. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting the order:", error);
+      toast.error(
+        "An error occurred while submitting the order. Please try again later."
+      );
+    }
+  };
+  const router = useRouter();
+  useEffect(() => {
+    // Redirect to home page after closing the confirmation modal
+    if (!showConfirmationModal) {
+      router.push("/checkout");
+    }
+  }, [showConfirmationModal]);
+
+
+  useEffect(() => {
+    // Show info toast message after the component is mounted
+    toast.info("Please Proceed to Checkout", {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }, []); 
   return (
     <div>
       <ToastContainer
-        position= "bottom-center"
+        position="bottom-center"
         autoClose={5006}
         hideProgressBar={false}
         newestOnTop={false}
@@ -27,6 +114,9 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
         draggable
         pauseOnHover
       />
+
+
+
       <div className="bg-gray-50">
         <h1 className="mx-auto text-center font-bold text-3xl py-5">
           Checkout
@@ -34,7 +124,9 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
 
         <main className="max-w-7xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto lg:max-w-none">
-            <form className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
+            <form onSubmit={Submit}
+              className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16"
+            >
               <div>
                 <div>
                   <h2 className="text-lg font-medium text-gray-900">
@@ -52,8 +144,10 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                       <input
                         type="email"
                         id="email-address"
-                        name="email-address"
-                        autocomplete="email"
+                        name="email"
+                        value={form.email}
+                        onChange={handleInputChange}
+                        autoComplete="email"
                         className="block w-full border-gray-300 rounded-md shadow-sm  focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                       />
                     </div>
@@ -77,8 +171,10 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                         <input
                           type="text"
                           id="first-name"
-                          name="first-name"
-                          autocomplete="given-name"
+                          name="firstName"
+                          value={form.firstName}
+                          onChange={handleInputChange}
+                          autoComplete="given-name"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                         />
                       </div>
@@ -95,25 +191,10 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                         <input
                           type="text"
                           id="last-name"
-                          name="last-name"
-                          autocomplete="family-name"
-                          className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="sm:col-span-2">
-                      <label
-                        htmlFor="company"
-                        className="block text-md font-medium text-gray-700"
-                      >
-                        Company
-                      </label>
-                      <div className="mt-1">
-                        <input
-                          type="text"
-                          name="company"
-                          id="company"
+                          name="lastName"
+                          value={form.lastName}
+                          onChange={handleInputChange}
+                          autoComplete="family-name"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                         />
                       </div>
@@ -131,7 +212,9 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                           type="text"
                           name="address"
                           id="address"
-                          autocomplete="street-address"
+                          value={form.address}
+                          onChange={handleInputChange}
+                          autoComplete="street-address"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                         />
                       </div>
@@ -149,6 +232,8 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                           type="text"
                           name="apartment"
                           id="apartment"
+                          value={form.apartment}
+                          onChange={handleInputChange}
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                         />
                       </div>
@@ -166,28 +251,10 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                           type="text"
                           name="city"
                           id="city"
+                          value={form.city}
+                          onChange={handleInputChange}
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                         />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="country"
-                        className="block text-md font-medium text-gray-700"
-                      >
-                        Country
-                      </label>
-                      <div className="mt-1">
-                        <select
-                          id="country"
-                          name="country"
-                          autocomplete="country"
-                          className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
-                        >
-                          <option>Pakistan</option>
-                          <option>United States</option>
-                        </select>
                       </div>
                     </div>
 
@@ -203,6 +270,8 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                           type="text"
                           name="province"
                           id="province"
+                          value={form.province}
+                          onChange={handleInputChange}
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                         />
                       </div>
@@ -218,9 +287,11 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                       <div className="mt-1">
                         <input
                           type="text"
-                          name="postal-code"
+                          name="postalCode"
                           id="postal-code"
-                          autocomplete="postal-code"
+                          value={form.postalCode}
+                          onChange={handleInputChange}
+                          autoComplete="postal-code"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                         />
                       </div>
@@ -236,9 +307,11 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                       <div className="mt-1">
                         <input
                           type="text"
-                          name="phone"
+                          name="phoneNo"
                           id="phone"
-                          autocomplete="tel"
+                          value={form.phoneNo}
+                          onChange={handleInputChange}
+                          autoComplete="Phone no"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                         />
                       </div>
@@ -313,7 +386,7 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                           type="text"
                           id="card-number"
                           name="card-number"
-                          autocomplete="cc-number"
+                          autoComplete="cc-number"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                         />
                       </div>
@@ -331,7 +404,7 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                           type="text"
                           id="name-on-card"
                           name="name-on-card"
-                          autocomplete="cc-name"
+                          autoComplete="cc-name"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                         />
                       </div>
@@ -349,7 +422,7 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                           type="text"
                           name="expiration-date"
                           id="expiration-date"
-                          autocomplete="cc-exp"
+                          autoComplete="cc-exp"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                         />
                       </div>
@@ -367,7 +440,7 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                           type="text"
                           name="cvc"
                           id="cvc"
-                          autocomplete="csc"
+                          autoComplete="csc"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 sm:text-base py-1 px-1"
                         />
                       </div>
@@ -377,7 +450,9 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
               </div>
 
               <div className="mt-10 lg:mt-0">
-                <h2 className="text-lg font-medium text-gray-900">Order summary</h2>
+                <h2 className="text-lg font-medium text-gray-900">
+                  Order summary
+                </h2>
 
                 <div className="mt-4 bg-white border border-gray-200 rounded-lg shadow-sm">
                   <h3 className="sr-only">Items in your cart</h3>
@@ -416,7 +491,7 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                                         k,
                                         cart[k].img,
                                         1,
-                                        cart[k].,
+                                        cart[k].name,
                                         cart[k].size,
                                         cart[k].price,
                                         cart[k].variant
@@ -472,9 +547,9 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                                     aria-hidden="true"
                                   >
                                     <path
-                                      fill-rule="evenodd"
+                                      fillRule="evenodd"
                                       d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                      clip-rule="evenodd"
+                                      clipRule="evenodd"
                                     />
                                   </svg>
                                 </button>
@@ -489,17 +564,19 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
                     <div className="flex items-center justify-between">
                       <dt className="text-sm">Subtotal</dt>
                       <dd className="text-sm font-medium text-gray-900">
-                        {subTotal}
+                        {subTotal} PKR
                       </dd>
                     </div>
                     <div className="flex items-center justify-between">
                       <dt className="text-sm">Shipping</dt>
-                      <dd className="text-sm font-medium text-gray-900">$5.00</dd>
+                      <dd className="text-sm font-medium text-gray-900">
+                        150 PKR
+                      </dd>
                     </div>
                     <div className="flex items-center justify-between border-t border-gray-200 pt-6">
                       <dt className="text-base font-medium">Total</dt>
                       <dd className="text-base font-medium text-gray-900">
-                        $75.52
+                        {subTotal + 150} PKR
                       </dd>
                     </div>
                   </dl>
@@ -517,6 +594,9 @@ const checkout = ({ cart, addtoCart, clearCart, removeQty, subTotal }) => {
           </div>
         </main>
       </div>
+      {showConfirmationModal && (
+        <OrderConfirmationModal onClose={() => setShowConfirmationModal(false)} />
+      )}
     </div>
   );
 };

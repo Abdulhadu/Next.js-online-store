@@ -15,7 +15,7 @@ let p= new Product({
     price: req.body[i].price,
     avaliableQty: req.body[i].avaliableQty
 })
-
+console.log("Our Record: " , p);
 await p.save();
     }
     res.status(200).json({ success: "Successs" });

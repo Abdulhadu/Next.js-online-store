@@ -29,10 +29,7 @@ const signup = () => {
     });
     const responce = await res.json();
     console.log(responce);
-    setfirstname("");
-    setlastname("");
-    setemail("");
-    setpassword("");
+
     toast.success("Your Account are Created Successfully.!", {
       position: "top-center",
       autoClose: 4000,

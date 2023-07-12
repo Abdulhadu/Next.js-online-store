@@ -58,6 +58,15 @@ const login = () => {
     }
   };
   return (
+    <>
+    <style jsx global>{`
+         footer{
+          display: none;
+         }
+         header{
+            display: none;
+           }
+      `}</style>
     <div className=" m-auto px-40">
       <ToastContainer
         position="top-center"
@@ -193,6 +202,7 @@ const login = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

@@ -40,27 +40,27 @@ const navbar = ({
           </Link>
           <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
             <Link href="/">
-              <a className="link link-underline link-underline-black mr-5 font-bold text-base cursor-pointer text-purple-800 hover:text-gray-900">
+              <a className="link link-underline font-sans antialiased link-underline-black mr-5 font-bold text-lg cursor-pointer text-purple-800 hover:text-gray-900">
                 Home
               </a>
             </Link>
             <Link href="/tshirt">
-              <a className="link link-underline link-underline-black mr-5 font-bold text-base cursor-pointer text-purple-800 hover:text-gray-900">
+              <a className="link link-underline link-underline-black mr-5 font-bold text-lg  cursor-pointer text-purple-800 hover:text-gray-900">
                 T-shirts
               </a>
             </Link>
             <Link href="/hoodies">
-              <a className="link link-underline link-underline-black mr-5 font-bold text-base cursor-pointer text-purple-800 hover:text-gray-900">
+              <a className="link link-underline link-underline-black mr-5 font-bold text-lg  cursor-pointer text-purple-800 hover:text-gray-900">
                 Hoodies
               </a>
             </Link>
             <Link href="/menStyle">
-              <a className="link link-underline link-underline-black mr-5 font-bold text-base cursor-pointer text-purple-800 hover:text-gray-900">
+              <a className="link link-underline link-underline-black mr-5 font-bold text-lg  cursor-pointer text-purple-800 hover:text-gray-900">
                 Men Style
               </a>
             </Link>
             <Link href="/contact">
-              <a className="link link-underline link-underline-black mr-5 font-bold text-base cursor-pointer text-purple-800 hover:text-gray-900">
+              <a className="link link-underline link-underline-black mr-5 font-bold text-lg  cursor-pointer text-purple-800 hover:text-gray-900">
                 Contact us
               </a>
             </Link>
@@ -142,7 +142,7 @@ const navbar = ({
                           onClick={logout}
                           className="text-gray-700 block px-4 py-2 font-semibold hover:bg-purple-300 text-sm"
                           role="menuitem"
-                          tabindex="-1"
+                          tabIndex="-1"
                           id="menu-item-3"
                         >
                           Sign out
