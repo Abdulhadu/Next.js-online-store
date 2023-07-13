@@ -96,7 +96,7 @@ const navbar = ({
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="menu-button"
-                  tabindex="-1"
+                  tabIndex="-1"
                 >
                   <div className="" role="none">
                     <ul>
@@ -106,7 +106,7 @@ const navbar = ({
                           href="/account"
                           className=" text-gray-700 block px-4 py-2 font-semibold hover:bg-purple-300 text-sm"
                           role="menuitem"
-                          tabindex="-1"
+                          tabIndex="-1"
                           id="menu-item-0"
                         >
                           My Accounts
@@ -118,7 +118,7 @@ const navbar = ({
                           href="/contact"
                           className="text-gray-700 block px-4 py-2 font-semibold hover:bg-purple-300 text-sm"
                           role="menuitem"
-                          tabindex="-1"
+                          tabIndex="-1"
                           id="menu-item-1"
                         >
                           Support
@@ -130,7 +130,7 @@ const navbar = ({
                           href="/orders"
                           className="text-gray-700 block px-4 py-2 font-semibold hover:bg-purple-300 text-sm"
                           role="menuitem"
-                          tabindex="-1"
+                          tabIndex="-1"
                           id="menu-item-2"
                         >
                           Orders
