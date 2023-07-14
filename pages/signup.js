@@ -1,4 +1,4 @@
-import { set } from "mongoose";
+
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
@@ -382,7 +382,7 @@ const signup = () => {
             title="Buy me a beer"
             href="https://www.buymeacoffee.com/scottwindon"
             target="_blank"
-            className="block w-16 h-16 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12"
+            className="block w-16 h-16 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12" rel="noreferrer"
           >
             <img
               className="object-cover object-center w-full h-full rounded-full"

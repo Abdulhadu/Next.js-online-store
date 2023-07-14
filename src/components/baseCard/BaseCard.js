@@ -1,12 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import {
   Card,
   CardContent,
-  Divider,
   Box,
   Typography,
-  Chip,
 } from "@mui/material";
 
 const BaseCard = (props) => {
@@ -18,6 +17,10 @@ const BaseCard = (props) => {
       <CardContent>{props.children}</CardContent>
     </Card>
   );
+};
+BaseCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default BaseCard;

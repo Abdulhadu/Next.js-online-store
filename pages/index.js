@@ -3,6 +3,9 @@ import React from "react";
 import mongoose from "mongoose";
 import Product from "../Models/Product";
 import Link from "next/link";
+import PropTypes from 'prop-types';
+
+
 export default function Home({products}) {
   return (
     <div className="container">
@@ -127,13 +130,13 @@ export default function Home({products}) {
           <div className="container px-5 py-24 mx-auto ">
             <div className="flex flex-wrap -m-4 ">
               <div className="p-4 md:w-1/3 hover:drop-shadow-xl">
-                <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                <div className="h-full border-2 border-gray-300 border-opacity-60 rounded-lg overflow-hidden">
                   <img
                     className="lg:h-48 md:h-36 w-full object-cover object-center"
                     src="card-1.png"
                     alt="blog"
                   />
-                  <div className="p-6 hover:drop-shadow-xl">
+                  <div className="p-6 bg-white">
                     <h2 className="tracking-widest text-xs title-font font-medium text-purple-800">
                       CATEGORY
                     </h2>
@@ -193,14 +196,14 @@ export default function Home({products}) {
                   </div>
                 </div>
               </div>
-              <div className="p-4 md:w-1/3 hover:drop-shadow-xl">
-                <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+              <div className="p-4 md:w-1/3 hover:drop-shadow-xl ">
+                <div className=" h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden ">
                   <img
                     className="lg:h-48 md:h-36 w-full object-cover object-center"
                     src="card-2.jpg"
                     alt="blog"
                   />
-                  <div className="p-6">
+                  <div className="p-6 bg-white">
                     <h2 className="tracking-widest text-xs title-font font-medium text-purple-800">
                       CATEGORY
                     </h2>
@@ -259,14 +262,17 @@ export default function Home({products}) {
                   </div>
                 </div>
               </div>
-              <div className="p-4 md:w-1/3 hover:drop-shadow-xl">
+              <div className="p-4 md:w-1/3  hover:drop-shadow-xl">
+             
                 <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                  <div>
                   <img
                     className="lg:h-48 md:h-36 w-full object-cover object-center"
                     src="card-3.jpg"
                     alt="blog"
                   />
-                  <div className="p-6">
+                  </div>
+                  <div className="p-6 bg-white">
                     <h2 className="tracking-widest text-xs title-font font-medium text-purple-800">
                       CATEGORY
                     </h2>
@@ -324,8 +330,9 @@ export default function Home({products}) {
                       </span>
                     </div>
                   </div>
+                  </div>
                 </div>
-              </div>
+              
             </div>
           </div>
         </section>
@@ -339,6 +346,7 @@ export default function Home({products}) {
         </h1>
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap -m-4 ">
+          
             {Object.keys(products).map((item) => {
               return (
                 <Link
@@ -346,7 +354,7 @@ export default function Home({products}) {
                   passHref={true}
                   href={`/product/${products[item].Slug}`}
                 >
-                  <div className="lg:w-1/5 h-1/5 md:w-1/2 p-4 w-full shadow-lg hover:shadow-2xl mx-6 my-6 ">
+                  <div className="lg:w-1/5 h-1/5 md:w-1/2 p-4 w-full shadow-lg hover:shadow-2xl mx-6 my-6 border-2">
                     <a className="block relative h-50 px-4 py-4 rounded overflow-hidden ">
                       <img
                         alt="ecommerce"
@@ -407,8 +415,8 @@ export default function Home({products}) {
               Services to Our Customers
             </h1>
           </div>
-          <div className="flex flex-wrap -m-4 drop-shadow-xl hover:drop-shadow-2xl black">
-            <div className="p-4 md:w-1/3">
+          <div className="flex flex-wrap -m-4 drop-shadow-xl ">
+            <div className="p-4 md:w-1/3 hover:drop-shadow-2xl black">
               <div className="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
                 <div className="flex items-center mb-3">
                   <div className="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-purple-800 text-white flex-shrink-0">
@@ -450,7 +458,7 @@ export default function Home({products}) {
                 </div>
               </div>
             </div>
-            <div className="p-4 md:w-1/3">
+            <div className="p-4 md:w-1/3 hover:drop-shadow-2xl black">
               <div className="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
                 <div className="flex items-center mb-3">
                   <div className="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-purple-800 text-white flex-shrink-0">
@@ -493,7 +501,7 @@ export default function Home({products}) {
                 </div>
               </div>
             </div>
-            <div className="p-4 md:w-1/3">
+            <div className="p-4 md:w-1/3 hover:drop-shadow-2xl black">
               <div className="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
                 <div className="flex items-center mb-3">
                   <div className="w-8 h-8 mr-3 inline-flex items-center justify-center rounded-full bg-purple-800 text-white flex-shrink-0">
@@ -589,8 +597,10 @@ export default function Home({products}) {
   );
   
 }
-
-export async function getServerSideProps(context) {
+Home.propTypes = {
+  products: PropTypes.object.isRequired,
+};
+export async function getServerSideProps() {
   if (!mongoose.connections[0].readyState) {
     mongoose.connect(`${process.env.MONGO_URI}`);
   }

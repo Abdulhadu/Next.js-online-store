@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FeatherIcon from "feather-icons-react";
 import Image from "next/image";
-import userimg from "../../../assets/images/users/user2.jpg";
+import userimg from "../../../public/static/images/users/user2.jpg";
 import {
   Box,
   Menu,
@@ -14,7 +14,6 @@ import {
   Divider,
 } from "@mui/material";
 import { useRouter } from "next/router";
-var jwt = require("jsonwebtoken");
 import jwt_decode from "jwt-decode";
 
 const ProfileDD = () => {
@@ -25,12 +24,9 @@ const ProfileDD = () => {
   useEffect(() => {
     const token = localStorage.getItem("admin");
     if (token) {
-      // console.log("Token from localStorage:", token);
       var decodedToken = jwt_decode(token, "secretkey");
       const username = decodedToken.username;
       setUsername(username);
-      // console.log("user: ", username)
-      // console.log(`Decoded Token: ${JSON.stringify(decodedToken)}`);
     } else {
       // Handle the case when there is no token available
     }
@@ -43,6 +39,7 @@ const ProfileDD = () => {
   const handleClose4 = () => {
     setAnchorEl4(null);
   };
+
   return (
     <>
       <Button
@@ -122,7 +119,7 @@ const ProfileDD = () => {
           </Box>
           <Divider />
           <Box p={2}>
-            <Link to="/Admin/logout">
+            <Link href="/Admin/logout">
               <Button
                 style={{
                   backgroundColor: "#21b6ae",

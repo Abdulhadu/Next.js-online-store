@@ -4,11 +4,22 @@ import Product from "../Models/Product";
 import Link from "next/link";
 const hoodie = ({ products }) => {
   return (
+    <>
+      <div
+  className="flex justify-center p-6 md:p-10 2xl:p-8 relative bg-no-repeat bg-center bg-cover"
+  style={{ backgroundImage: 'url("/page-header.jpg")' }}
+>
+  <div className="absolute top-0 start-0 bg-black w-full h-full opacity-50 transition-opacity duration-500 group-hover:opacity-80"></div>
+  <div className="w-full flex items-center justify-center relative z-10 py-10 md:py-14 lg:py-20 xl:py-24 2xl:py-32">
+    <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white text-center">
+      <span className="font-satisfy block font-normal mb-3">explore</span>
+     HOODIES
+    </h2>
+  </div>
+</div>
+
     <div>
       <section className="body-font lg:px-8 mx-auto max-w-7xl">
-        <h1 className="text-center font-bold text-5xl my-12 text-purple-900 ">
-          Hoodies
-        </h1>
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap -m-4 ">
           {Object.keys(products).length===0 && <p> NO Item to show</p>}
@@ -62,9 +73,10 @@ const hoodie = ({ products }) => {
         </div>
       </section>
     </div>
+    </>
   );
 };
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   if (!mongoose.connections[0].readyState) {
     mongoose.connect("mongodb://0.0.0.0:27017/online-store");
   }

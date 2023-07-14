@@ -16,6 +16,7 @@ import React, { useEffect, useState } from "react";
 import { delete_Product, getProductsData } from "../../../services/admin";
 import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
+import PropTypes from "prop-types";
 
 export async function getStaticProps() {
   const data = (await getProductsData()) || [];
@@ -46,6 +47,7 @@ const ProductPerformance = ({ data }) => {
 
     if (response.msg) {
       toast.success(response.msg);
+      
     } else {
       toast.error(response.error);
     }
@@ -224,4 +226,8 @@ const ProductPerformance = ({ data }) => {
   );
 };
 
+
+ProductPerformance.propTypes = {
+  data: PropTypes.array.isRequired, // Add prop type for 'data' as an array
+};
 export default ProductPerformance;

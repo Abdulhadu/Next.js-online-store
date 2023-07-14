@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
 const forgot = () => {
@@ -114,7 +114,7 @@ const forgot = () => {
                       Continue
                     </button>
                     <p className="text-sm font-semibold mt-2 pt-1 mb-0">
-                      Don't have an account?
+                      Donot have an account?
                       <a
                         href="/signup"
                         className="text-red-600 mx-3 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"

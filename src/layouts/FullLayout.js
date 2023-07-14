@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   experimentalStyled,
   useMediaQuery,
@@ -31,7 +32,7 @@ const PageWrapper = experimentalStyled("div")(({ theme }) => ({
 }));
 
 const FullLayout = ({ children }) => {
-  const [isSidebarOpen, setSidebarOpen] = React.useState(true);
+  const [isSidebarOpen] = React.useState(true);
   const [isMobileSidebarOpen, setMobileSidebarOpen] = React.useState(false);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   return (
@@ -63,5 +64,9 @@ const FullLayout = ({ children }) => {
     </MainWrapper>
   );
 };
+FullLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 
 export default FullLayout;

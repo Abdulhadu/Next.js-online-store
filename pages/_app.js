@@ -3,10 +3,11 @@ import { useEffect } from "react";
 import Footer from "../components/footer";
 import NavBar from "../components/navbar";
 import { useRouter } from "next/router";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React, { useState } from "react";
 import LoadingBar from "react-top-loading-bar";
+import PropTypes from "prop-types";
 
 function MyApp({ Component, pageProps }) {
   const [progress, setProgress] = useState(0);
@@ -88,7 +89,7 @@ function MyApp({ Component, pageProps }) {
     });
   };
 
-  const removeQty = (itemCode, img, qty, name, size, price, variant) => {
+  const removeQty = (itemCode, img, qty) => {
     let newCart = cart;
     if (itemCode in cart) {
       newCart[itemCode].qty = cart[itemCode].qty - qty;
@@ -138,5 +139,10 @@ function MyApp({ Component, pageProps }) {
     </>
   );
 }
+
+MyApp.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+  pageProps: PropTypes.object.isRequired,
+};
 
 export default MyApp;

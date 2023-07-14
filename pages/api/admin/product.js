@@ -26,7 +26,7 @@ export default async (req, res) => {
 const addProduct = async (req, res) => {
    
     try {
-        const products = req.body; // Assuming the request body is an array of products
+        // Assuming the request body is an array of products
     
         const { title, Slug, Category, Size, Color, price, img, Desc, avaliableQty } = req.body;
 
@@ -58,15 +58,15 @@ const addProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     try {
         const id = req.query.id;
-        console.log(id);
-        const productDeletionResult = await Product.findByIdAndDelete(id);
+        // console.log(id);
+        await Product.findByIdAndDelete(id);
         return res.status(201).json({ msg: "Product Deleted Successfully" });
-    }
-    catch (error) {
+    } catch (error) {
         console.log('error in deleting product(server) => ' + error);
-        return res.status(405).json({ error: "can't delete product , Retry !" });
+        return res.status(405).json({ error: "can't delete product, Retry!" });
     }
-}
+};
+
 
 // get Product
 const getProduct = async (req, res) => {

@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import mongoose from "mongoose";
 import Product from "../../Models/Product";
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PropTypes from "prop-types";
 
 const Post = ({ buyNow, addtoCart, Variants, products }) => {
   const router = useRouter();
@@ -40,14 +41,14 @@ const Post = ({ buyNow, addtoCart, Variants, products }) => {
   const onchangePin = (e) => {
     setpin(e.target.value);
   };
-  const [Color, setColor] = useState(products.Color);
-  const [Size, setSize] = useState(products.Size);
+  
 
   const refreshVariants = (newsize, newcolor) => {
     let url = `${process.env.NEXT_PUBLIC_HOST}/product/${Variants[newcolor][newsize]["Slug"]}`;
     window.location = url;
   };
-
+  let Color = products.Color;
+  let Size = products.Size;
   return (
     <>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -367,6 +368,15 @@ const Post = ({ buyNow, addtoCart, Variants, products }) => {
     </>
   );
 };
+
+Post.propTypes = {
+  buyNow: PropTypes.func.isRequired,
+  addtoCart: PropTypes.func.isRequired,
+  Variants: PropTypes.object.isRequired,
+  products: PropTypes.object.isRequired,
+};
+
+
 export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
     mongoose.connect(`${process.env.MONGO_URI}`);

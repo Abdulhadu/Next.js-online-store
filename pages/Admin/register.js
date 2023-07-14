@@ -24,9 +24,6 @@ const register = () => {
     cPassword: "",
   });
 
-  // storing errors in state
-  const [Confirm_errors, setConfirm_Errors] = useState(false);
-  const [length_errors, setLength_Errors] = useState(false);
 
   // destructuring form data
   const { username, email, password, cPassword } = formData;
@@ -35,10 +32,12 @@ const register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password.length < 8) {
-      setLength_Errors(true);
+      toast.error("Password should be at least 8 characters long.");
+      return;
     }
     if (password !== cPassword) {
-      setConfirm_Errors(true);
+      toast.error("Passwords do not match.");
+      return;
     }
     const finalData = { username, email, password };
     console.log("final data is: ", finalData);
@@ -57,6 +56,7 @@ const register = () => {
     } catch (error) {
       toast.error("An error occurred while registering.");
     }
+
   };
   return (
     <>

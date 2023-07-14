@@ -14,7 +14,7 @@ export default async (req , res) =>
     }
     catch(error)
     {
-        console.log('error in getting category data by id (server) => ' + server)
+        console.log('error in getting category data by id (server) => ' + error)
         return res.status(408).json({error : 'cannot get category data'})
     }
     

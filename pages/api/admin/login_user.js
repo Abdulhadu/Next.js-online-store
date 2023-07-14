@@ -1,8 +1,7 @@
 import Admin from "../../../Models/admin";
 import connectdb from "../../../Middleware/mongoose";
-var AES = require("crypto-js/aes");
-var CryptoJS = require("crypto-js");
-var jwt = require('jsonwebtoken');
+import CryptoJS from "crypto-js";
+import jwt from 'jsonwebtoken';
 
 const handler = async (req, res) => {
   if (req.method == "POST") {
@@ -24,7 +23,6 @@ const handler = async (req, res) => {
     else {
       res.status(200).json({ success: false, error: "User are not register yet First Signup " });
     }
-
   }
 };
 

@@ -103,7 +103,7 @@ const navbar = ({
                       <li>
                         {" "}
                         <a
-                          href="/account"
+                          href="#"
                           className=" text-gray-700 block px-4 py-2 font-semibold hover:bg-purple-300 text-sm"
                           role="menuitem"
                           tabIndex="-1"

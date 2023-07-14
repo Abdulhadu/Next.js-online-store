@@ -1,8 +1,7 @@
 import User from "../../Models/User";
 import connectdb from "../../Middleware/mongoose";
-var AES = require("crypto-js/aes");
-var CryptoJS = require("crypto-js");
-var jwt = require('jsonwebtoken');
+import CryptoJS from "crypto-js";
+import jwt from 'jsonwebtoken';
 
 const handler = async (req, res) => {
   if (req.method == "POST") {

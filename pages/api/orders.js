@@ -15,7 +15,7 @@ const calculateTotalPrice = (cart) => {
   const handler = async (req, res) => {
     if (req.method === 'POST') {
       try {
-        const { email, username, address, phoneNo, cart } = req.body;
+        const { email, username, address, cart } = req.body;
   
         const products = Object.keys(cart).map((key) => ({
           productid: key,
